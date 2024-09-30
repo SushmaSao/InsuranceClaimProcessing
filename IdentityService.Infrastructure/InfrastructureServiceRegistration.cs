@@ -11,7 +11,6 @@ namespace IdentityService.Infrastructure
             services.AddScoped<IPasswordHasher, SecurePasswordHelper>();
             services.AddScoped<ITokenGenerator, JwtTokenGenerator>();
 
-
             return services;
         }
     }

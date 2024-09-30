@@ -1,13 +1,10 @@
-﻿using IdentityService.Domain.Entities;
-using MediatR;
+﻿using MediatR;
 
 namespace IdentityService.Application.Queries.Get
 {
-    public class GetUserQuery(string email, string password) : IRequest<UserModel>
+    public record GetUserQuery : IRequest<UserModel>
     {
-        public string Email { get; } = email;
-        public string Password { get; } = password;
-
-        public Roles Roles { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
 }

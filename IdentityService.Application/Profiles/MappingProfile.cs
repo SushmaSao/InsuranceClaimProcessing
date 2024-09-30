@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using IdentityService.Application.Command.Create;
+using IdentityService.Application.Queries.Get;
 using IdentityService.Domain.Entities;
 
 namespace IdentityService.Application.Profiles
@@ -8,7 +9,11 @@ namespace IdentityService.Application.Profiles
     {
         public MappingProfile()
         {
+            //Command
             CreateMap<Users, CreateUserCommand>().ReverseMap();
+
+            //Query
+            CreateMap<Users,UserModel>().ReverseMap();
         }
     }
 }
