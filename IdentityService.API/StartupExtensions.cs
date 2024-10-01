@@ -2,6 +2,7 @@
 using IdentityService.Persistence;
 using IdentityService.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 namespace IdentityService.API
 {
@@ -13,8 +14,37 @@ namespace IdentityService.API
             builder.Services.AddPersistenceService(builder.Configuration);
             builder.Services.AddInfrastructureService();
             builder.Services.AddHttpContextAccessor();
+
             builder.Services.AddControllers();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });
+
+                // Add Bearer token authentication to Swagger
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Please enter your Bearer token (e.g., 'Bearer {token}')",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+            });
             return builder.Build();
         }
 
@@ -28,6 +58,10 @@ namespace IdentityService.API
 
 
             app.UseHttpsRedirection();
+
+            app.UseAuthentication(); // Add this to enable authentication middleware
+            app.UseAuthorization();  // Add this to enable authorization middleware
+
             app.MapControllers();
             return app;
         }

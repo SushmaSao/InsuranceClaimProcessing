@@ -1,5 +1,4 @@
 ﻿using IdentityService.Application.Contracts;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace IdentityService.Infrastructure

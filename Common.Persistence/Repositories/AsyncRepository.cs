@@ -21,7 +21,7 @@ namespace Common.Persistence.Repositories
             return Task.CompletedTask;
         }
 
-        public async Task<T> GetByIdAsync(int id) => await _dbContext.Set<T>().FindAsync(id);
+        public async Task<T> GetByIdAsync(Guid id) => await _dbContext.Set<T>().FindAsync(id);
 
         public async Task<IEnumerable<T>> GetAllAsync() => await _dbContext.Set<T>().ToListAsync();
 

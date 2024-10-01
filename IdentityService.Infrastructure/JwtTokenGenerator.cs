@@ -11,19 +11,23 @@ namespace IdentityService.Infrastructure
     public class JwtTokenGenerator : ITokenGenerator
     {
         private readonly string _secretKey;
+        private readonly string _issuer;
+        private readonly string _audience;
         private readonly int _expiryDuration;
 
         public JwtTokenGenerator(IConfiguration configuration)
         {
             _secretKey = configuration["JwtSettings:SecretKey"];
             _expiryDuration = int.Parse(configuration["JwtSettings:ExpiryInMinutes"]);
+            _issuer = configuration["JwtSettings:Issuer"];
+            _audience = configuration["JwtSettings:Audience"];
         }
 
-        public string GenerateToken(string userId, IEnumerable<string> roles)
+        public string GenerateToken(Guid userId, IEnumerable<string> roles)
         {
             var claims = new List<Claim>
         {
-            new Claim(JwtRegisteredClaimNames.Sub, userId),
+            new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
@@ -33,8 +37,8 @@ namespace IdentityService.Infrastructure
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                issuer: "EClaimInsuranceProcessing",
-                audience: "promoapp.com",
+                issuer: _issuer,
+                audience: _audience,
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(_expiryDuration),
                 signingCredentials: creds);
@@ -42,33 +46,6 @@ namespace IdentityService.Infrastructure
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public bool ValidateToken(string token, out string userId)
-        {
-            userId = null;
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_secretKey);
-
-            try
-            {
-                var principal = tokenHandler.ValidateToken(token, new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ClockSkew = TimeSpan.Zero
-                }, out SecurityToken validatedToken);
-
-                var jwtToken = (JwtSecurityToken)validatedToken;
-                userId = jwtToken.Claims.First(x => x.Type == JwtRegisteredClaimNames.Sub).Value;
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
     }
 
 }

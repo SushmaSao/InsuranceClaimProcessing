@@ -12,8 +12,9 @@ namespace IdentityService.Application.Profiles
             //Command
             CreateMap<Users, CreateUserCommand>().ReverseMap();
 
-            //Query
-            CreateMap<Users,UserModel>().ReverseMap();
+            CreateMap<Users, GetUserDTO>().ReverseMap();
+
+
         }
     }
 }

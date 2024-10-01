@@ -1,6 +1,6 @@
-﻿using IdentityService.Application.Command.Create;
+﻿using IdentityService.Application.Command.Authenticate;
+using IdentityService.Application.Command.Create;
 using IdentityService.Application.Contracts;
-using IdentityService.Application.Queries.Get;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,11 +10,9 @@ namespace IdentityService.API.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly ITokenGenerator _tokenGenerator;
         private readonly IMediator _mediator;
-        public AccountController(IMediator mediator, ITokenGenerator tokenGenerator)
+        public AccountController(IMediator mediator)
         {
-            _tokenGenerator = tokenGenerator;
             _mediator = mediator;
         }
 
@@ -27,16 +25,9 @@ namespace IdentityService.API.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<ActionResult> Authenticate([FromBody] GetUserQuery getUserQuery)
+        public async Task<ActionResult> Authenticate([FromBody] AuthenticateUserCommand authenticateUserCommand)
         {
-            var user = await _mediator.Send(getUserQuery);
-            if (user == null)
-            {
-                throw new Exception("Invalid credentials");
-            }
-
-            // Generate JWT token with roles
-            var token = _tokenGenerator.GenerateToken(user.Email, new List<string>() { user.RoleId?.ToString() });
+            string token = await _mediator.Send(authenticateUserCommand);
 
             return Ok(token);
         }

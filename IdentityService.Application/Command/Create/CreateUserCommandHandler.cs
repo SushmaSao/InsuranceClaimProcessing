@@ -32,6 +32,7 @@ namespace IdentityService.Application.Command.Create
             request.Password = _passwordHasher.HashPassword(request.Password);
 
             Users user = _mapper.Map<Users>(request);
+            user.CreatedDate = DateTime.UtcNow;
 
             await _userRepository.AddAsync(user);
 

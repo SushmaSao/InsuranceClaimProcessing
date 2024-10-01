@@ -4,27 +4,29 @@ using IdentityService.Application.Contracts;
 using IdentityService.Domain.Entities;
 using MediatR;
 
-namespace IdentityService.Application.Queries.Get
+namespace IdentityService.Application.Command.Authenticate
 {
-    public class GetUserQueryHandler : IRequestHandler<GetUserQuery, UserModel>
+    public class AuthenticateUserCommandHandler : IRequestHandler<AuthenticateUserCommand, string>
     {
         private readonly IAsyncRepository<Users> _userRepository;
         private readonly IAsyncRepository<UserRoles> _userRoleRepository;
         private readonly IPasswordHasher _passwordHasher;
+        private readonly ITokenGenerator _tokenGenerator;
 
-        private readonly IMapper _mapper;
-
-        public GetUserQueryHandler(IAsyncRepository<Users> userRepository, IAsyncRepository<UserRoles> usrRoleRepository, IPasswordHasher passwordHasher, IMapper mapper)
+        public AuthenticateUserCommandHandler(IAsyncRepository<Users> userRepository,
+            IAsyncRepository<UserRoles> usrRoleRepository,
+            IPasswordHasher passwordHasher,
+            ITokenGenerator tokenGenerator)
         {
             _userRepository = userRepository;
             _userRoleRepository = usrRoleRepository;
             _passwordHasher = passwordHasher;
-            _mapper = mapper;
+            _tokenGenerator = tokenGenerator;
         }
 
-        public async Task<UserModel> Handle(GetUserQuery request, CancellationToken cancellationToken)
+        public async Task<string> Handle(AuthenticateUserCommand request, CancellationToken cancellationToken)
         {
-            UserModel? usrModel = null;
+            string token = string.Empty;
 
             var user = await _userRepository.FindAsync(usr => usr.Email == request.Email);
 
@@ -38,15 +40,16 @@ namespace IdentityService.Application.Queries.Get
                     throw new Exception("Invalid credentials");
                 }
 
-
+                //Fetch UserRoles
                 var usrRoleRepo = await _userRoleRepository.FindAsync(rol => rol.UserId == usrDetails.Id);
-                usrModel = _mapper.Map<UserModel>(usrDetails);
-                usrModel.RoleId = usrRoleRepo.FirstOrDefault()?.RoleId;
 
-                return usrModel;
+
+                // Generate JWT token with roles
+                token = _tokenGenerator.GenerateToken(usrDetails.Id, new List<string>() { usrRoleRepo.FirstOrDefault()?.RoleId.ToString() });
+
             }
 
-            return usrModel;
+            return token;
         }
     }
 }
