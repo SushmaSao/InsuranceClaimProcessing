@@ -14,7 +14,7 @@ namespace CustomerService.Persistence
             services.AddDbContext<CustomerServiceDBContext>(options =>
               options.UseSqlServer(configuration.GetConnectionString("CustomerServiceConnectionString")));
 
-            services.AddScoped<IAsyncRepository<Customer>, AsyncRepository<Customer, CustomerServiceDBContext>>();
+            services.AddScoped<IAsyncRepository<CustomerProfile>, AsyncRepository<CustomerProfile, CustomerServiceDBContext>>();
 
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork<CustomerServiceDBContext>));
 

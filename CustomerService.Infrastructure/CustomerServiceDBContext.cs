@@ -6,7 +6,7 @@ namespace CustomerService.Persistence
 {
     public class CustomerServiceDBContext(DbContextOptions<CustomerServiceDBContext> options) : DbContext(options)
     {
-        public DbSet<Customer> Customers { get; set; }
+        public DbSet<CustomerProfile> CustomerProfile { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

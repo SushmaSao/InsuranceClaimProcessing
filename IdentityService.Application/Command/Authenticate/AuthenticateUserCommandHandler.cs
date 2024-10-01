@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Common.Application.Contracts.Persistence;
+﻿using Common.Application.Contracts.Persistence;
 using IdentityService.Application.Contracts;
 using IdentityService.Domain.Entities;
 using MediatR;

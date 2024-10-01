@@ -7,11 +7,11 @@ namespace CustomerService.Application.Command.Create
 {
     public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, bool>
     {
-        private readonly IAsyncRepository<Customer> _customerRepository;
+        private readonly IAsyncRepository<CustomerProfile> _customerRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CreateCustomerCommandHandler(IAsyncRepository<Customer> customerRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public CreateCustomerCommandHandler(IAsyncRepository<CustomerProfile> customerRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             this._customerRepository = customerRepository;
             this._unitOfWork = unitOfWork;
@@ -20,7 +20,7 @@ namespace CustomerService.Application.Command.Create
 
         async Task<bool> IRequestHandler<CreateCustomerCommand, bool>.Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
         {
-            Customer customers = _mapper.Map<Customer>(request);
+            CustomerProfile customers = _mapper.Map<CustomerProfile>(request);
 
             //validation code 
 

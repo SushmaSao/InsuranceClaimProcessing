@@ -8,7 +8,7 @@ namespace CustomerService.Application.Profiles
     {
         public MappingProfile()
         {
-            CreateMap<Customer, CreateCustomerCommand>().ReverseMap();
+            CreateMap<CustomerProfile, CreateCustomerCommand>().ReverseMap();
         }
     }
 }

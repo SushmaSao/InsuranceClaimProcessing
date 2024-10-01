@@ -31,9 +31,9 @@ namespace IdentityService.API.Controllers
                 return Unauthorized();
             }
 
-            GetUserByIdQuery getUserByIdQuery = new GetUserByIdQuery(userId);
+            GetUserByIdQuery getUserByIdQuery = new(Guid.Parse(userId));
 
-            var response = await _mediator.Send();
+            var response = await _mediator.Send(getUserByIdQuery);
             return Ok(response);
         }
 

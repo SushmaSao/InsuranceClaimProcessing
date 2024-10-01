@@ -2,7 +2,7 @@
 
 namespace CustomerService.Domain.Entities
 {
-    public class Customer : AuditableEntity
+    public class CustomerProfile : AuditableEntity
     {
         public Guid Id { get; set; }
 

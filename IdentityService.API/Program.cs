@@ -25,7 +25,7 @@ internal class Program
                 ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
                 ValidAudience = builder.Configuration["JwtSettings:Audience"],
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"])),
-                //   ClockSkew = TimeSpan.Zero // to reduce token expiration time drift issues
+                ClockSkew = TimeSpan.Zero // to reduce token expiration time drift issues
             };
         });
 

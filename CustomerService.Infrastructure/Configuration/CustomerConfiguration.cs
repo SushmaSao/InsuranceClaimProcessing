@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CustomerService.Persistence.Configuration
 {
-    internal class CustomerConfiguration : IEntityTypeConfiguration<Customer>
+    internal class CustomerConfiguration : IEntityTypeConfiguration<CustomerProfile>
     {
-        public void Configure(EntityTypeBuilder<Customer> builder)
+        public void Configure(EntityTypeBuilder<CustomerProfile> builder)
         {
             builder.Property(e => e.FirstName).IsRequired()
                   .HasMaxLength(50);
