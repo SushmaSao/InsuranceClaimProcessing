@@ -8,7 +8,7 @@ namespace ClaimProcessingService.Persistence.Configuration
     {
         public void Configure(EntityTypeBuilder<Claim> builder)
         {
-            builder.Property(e => e.CustomerId).IsRequired();
+            builder.Property(e => e.UserId).IsRequired();
             builder.Property(e => e.IncidentDetails).IsRequired()
                 .HasMaxLength(50);
             builder.Property(e => e.ClaimType).IsRequired();

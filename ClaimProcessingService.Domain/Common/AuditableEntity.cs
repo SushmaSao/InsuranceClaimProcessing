@@ -2,9 +2,9 @@
 {
     public class AuditableEntity
     {
-        public string CreatedBy { get; set; } = "Admin";
+        public string CreatedBy { get; set; } 
         public DateTime CreatedDate { get; set; }
-        public string LastModifiedBy { get; set; } = "Admin";
+        public string LastModifiedBy { get; set; } = string.Empty;
         public DateTime? LastModifiedDate { get; set; }
 
     }

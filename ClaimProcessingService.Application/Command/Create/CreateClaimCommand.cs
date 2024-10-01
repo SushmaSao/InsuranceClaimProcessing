@@ -2,9 +2,9 @@
 
 namespace ClaimProcessingService.Application.Command.Create
 {
-    public class CreateClaimCommand(int customerId, string claimType, string incidentDetails, decimal claimAmount, string claimStatus, DateTime dateofClaim) : IRequest<bool>
+    public class CreateClaimCommand(Guid userId, string claimType, string incidentDetails, decimal claimAmount, string claimStatus, DateTime dateofClaim) : IRequest<bool>
     {
-        public int CustomerId { get; } = customerId;
+        public Guid UserId { get; set; } = userId;
 
         public string ClaimType { get; } = claimType;
 

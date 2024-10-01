@@ -4,6 +4,7 @@ using ClaimProcessingService.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClaimProcessingService.Persistence.Migrations
 {
     [DbContext(typeof(ClaimProcessingServiceDBContext))]
-    partial class ClaimProcessingServiceDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241001181828_RenameCustomerIdColumnInClaimsTable")]
+    partial class RenameCustomerIdColumnInClaimsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
