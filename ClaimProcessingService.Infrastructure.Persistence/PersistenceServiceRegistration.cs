@@ -1,5 +1,6 @@
-﻿using ClaimProcessingService.Application.Contracts.Persistence;
-using ClaimProcessingService.Persistence.Repositories;
+﻿using ClaimProcessingService.Domain.Entities;
+using Common.Application.Contracts.Persistence;
+using Common.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,8 +14,9 @@ namespace ClaimProcessingService.Persistence
             services.AddDbContext<ClaimProcessingServiceDBContext>(options =>
               options.UseSqlServer(configuration.GetConnectionString("ClaimProcessingServiceConnectionString")));
 
+            services.AddScoped<IAsyncRepository<Claim>, AsyncRepository<Claim, ClaimProcessingServiceDBContext>>();
 
-            services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
+            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork<ClaimProcessingServiceDBContext>));
 
             return services;
         }

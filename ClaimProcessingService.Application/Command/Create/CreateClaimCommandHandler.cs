@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using ClaimProcessingService.Application.Command.Create;
-using ClaimProcessingService.Application.Contracts.Persistence;
 using ClaimProcessingService.Domain.Entities;
+using Common.Application.Contracts.Persistence;
 using MediatR;
 
 namespace CustomerService.Application.Command.Create
@@ -9,11 +9,13 @@ namespace CustomerService.Application.Command.Create
     public class CreateClaimCommandHandler : IRequestHandler<CreateClaimCommand, bool>
     {
         private readonly IAsyncRepository<Claim> _claimRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CreateClaimCommandHandler(IAsyncRepository<Claim> claimRepository, IMapper mapper)
+        public CreateClaimCommandHandler(IAsyncRepository<Claim> claimRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             this._claimRepository = claimRepository;
+            this._unitOfWork = unitOfWork;
             this._mapper = mapper;
         }
 
@@ -23,7 +25,9 @@ namespace CustomerService.Application.Command.Create
 
             //validation code 
 
-            claim = await _claimRepository.AddAsync(claim);
+            await _claimRepository.AddAsync(claim);
+            await _unitOfWork.CommitAsync();
+
 
             return true;
         }

@@ -13,6 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Common.Application\Common.Application.csproj" />
+    <ProjectReference Include="..\Common.Persistence\Common.Persistence.csproj" />
     <ProjectReference Include="..\CustomerService.Application\CustomerService.Application.csproj" />
     <ProjectReference Include="..\CustomerService.Core\CustomerService.Domain.csproj" />
   </ItemGroup>

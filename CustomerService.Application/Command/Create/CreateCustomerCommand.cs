@@ -2,7 +2,7 @@
 
 namespace CustomerService.Application.Command.Create
 {
-    public class CreateCustomerCommand(string firstName, string lastName, string email, string phoneNumber, string address, DateTime dateOfBirth) : IRequest<bool>
+    public record CreateCustomerCommand(string firstName, string lastName, string email, string phoneNumber, string address, DateTime dateOfBirth) : IRequest<bool>
     {
         public string FirstName { get; } = firstName;
 

@@ -8,24 +8,17 @@ namespace CustomerService.API.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly IMediator _mediator;
-        public AccountController(IMediator mediator)
+        public AccountController()
         {
-            _mediator = mediator;
         }
 
-        [HttpPost(Name = "Signup")]
-        public async Task<ActionResult> RegisterUser([FromBody] CreateCustomerCommand createCustomerCommand)
+        [HttpGet(Name = "Welcome")]
+        public async Task<ActionResult> UpdateCustomerInfo()
         {
-            var response = await _mediator.Send(createCustomerCommand);
-            return Ok(response);
+            var task = Task.FromResult("Hello World");
+            return Ok(await task);
         }
 
-        [HttpPost(Name = "Login")]
-        public async Task<ActionResult> AuthenticateUser([FromBody] CreateCustomerCommand createCustomerCommand)
-        {
-            var response = await _mediator.Send(createCustomerCommand);
-            return Ok(response);
-        }
+
     }
 }

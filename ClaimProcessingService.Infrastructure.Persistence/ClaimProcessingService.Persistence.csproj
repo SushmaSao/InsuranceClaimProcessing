@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ClaimProcessingService.Application\ClaimProcessingService.Application.csproj" />
     <ProjectReference Include="..\ClaimProcessingService.Domain\ClaimProcessingService.Domain.csproj" />
+    <ProjectReference Include="..\Common.Persistence\Common.Persistence.csproj" />
   </ItemGroup>
 
 </Project>
