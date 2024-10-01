@@ -2,6 +2,6 @@
 {
     public interface ITokenGenerator
     {
-        string GenerateToken(Guid userId, IEnumerable<string> roles);
+        string GenerateToken(Guid userId, string email, IEnumerable<string> roles);
     }
 }

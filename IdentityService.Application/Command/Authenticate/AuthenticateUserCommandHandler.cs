@@ -44,7 +44,7 @@ namespace IdentityService.Application.Command.Authenticate
 
 
                 // Generate JWT token with roles
-                token = _tokenGenerator.GenerateToken(usrDetails.Id, new List<string>() { usrRoleRepo.FirstOrDefault()?.RoleId.ToString() });
+                token = _tokenGenerator.GenerateToken(usrDetails.Id, usrDetails.Email, usrRoleRepo.Select(a => a.Id.ToString()));
 
             }
 

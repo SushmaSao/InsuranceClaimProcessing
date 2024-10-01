@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CustomerService.Application.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CustomerService.Application
 {
@@ -9,6 +10,7 @@ namespace CustomerService.Application
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
 
+            services.AddScoped<ICustomerProfileService, CustomerProfileService>();
             return services;
         }
     }

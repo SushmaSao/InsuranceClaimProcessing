@@ -23,12 +23,13 @@ namespace IdentityService.Infrastructure
             _audience = configuration["JwtSettings:Audience"];
         }
 
-        public string GenerateToken(Guid userId, IEnumerable<string> roles)
+        public string GenerateToken(Guid userId, string email, IEnumerable<string> roles)
         {
             var claims = new List<Claim>
         {
-            new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            new(JwtRegisteredClaimNames.Sub, userId.ToString()),
+            new(JwtRegisteredClaimNames.Email, email),
+            new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
             claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
