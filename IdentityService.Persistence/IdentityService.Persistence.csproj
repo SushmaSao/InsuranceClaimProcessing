@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Common.Persistence\Common.Persistence.csproj" />
-    <ProjectReference Include="..\CustomerService.Application\CustomerService.Application.csproj" />
     <ProjectReference Include="..\IdentityService.Application\IdentityService.Application.csproj" />
     <ProjectReference Include="..\IdentityService.Domain\IdentityService.Domain.csproj" />
     <ProjectReference Include="..\IdentityService.Infrastructure\IdentityService.Infrastructure.csproj" />
