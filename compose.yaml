@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  identityservice.api:
+    build:
+      context: ./ # Path to the IdentityService Dockerfile
+      dockerfile: DockerFile.IdentityService.docker
+    ports:
+      - "5001:5001"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__EInsuranceIdentityConnectionString=Host=postgres;Port=5432;Database=Identity;Username=postgres;Password=password
+    depends_on:
+      - postgres
+
+  customerservice:
+    build:
+      context: ./ # Path to the CustomerService Dockerfile
+      dockerfile: Dockerfile.CustomerService.docker
+    ports:
+      - "5002:5002"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__CustomerServiceConnectionString=Host=postgres;Port=5432;Database=Customers;Username=postgres;Password=password
+    depends_on:
+      - postgres
+      - identityservice.api
+
+  claimprocessingservice:
+    build:
+      context: ./ # Path to the ClaimProcessingService Dockerfile
+      dockerfile: Dockerfile.ClaimProcessingService.docker
+    ports:
+      - "5003:5003"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__ClaimProcessingServiceConnectionString=Host=postgres;Port=5432;Database=ClaimProcessing;Username=postgres;Password=password
+    depends_on:
+      - postgres
+      - identityservice.api
+
+  postgres:
+    image: postgres:17
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+   
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com  # Change to your email
+      PGADMIN_DEFAULT_PASSWORD: admin  # Change to your password
+    ports:
+      - "8080:80"  # Access pgAdmin at http://localhost:8080
+    
+
+volumes:
+  pgdata:

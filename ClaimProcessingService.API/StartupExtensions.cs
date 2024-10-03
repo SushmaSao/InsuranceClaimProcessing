@@ -69,11 +69,12 @@ namespace ClaimProcessingService.API
             try
             {
                 var context = scope.ServiceProvider.GetService<ClaimProcessingServiceDBContext>();
-                if (context != null)
+                if (context == null)
                 {
-                    await context.Database.EnsureDeletedAsync();
-                    await context.Database.MigrateAsync();
+                    await context.Database.EnsureCreatedAsync();
                 }
+                await context.Database.MigrateAsync();
+
             }
             catch (Exception ex)
             {

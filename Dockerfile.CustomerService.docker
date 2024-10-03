@@ -1,0 +1,37 @@
+
+# Stage 1: Build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+
+COPY ["Common.Application/Common.Application.csproj", "Common.Application/"]
+COPY ["Common.Persistence/Common.Persistence.csproj", "Common.Persistence/"]
+
+
+# Copy the solution file and restore dependencies
+COPY ["CustomerService.Application/CustomerService.Application.csproj", "CustomerService.Application/"]
+COPY ["CustomerService.Core/CustomerService.Domain.csproj", "CustomerService.Core/"]
+COPY ["CustomerService.Infrastructure/CustomerService.Persistence.csproj", "CustomerService.Infrastructure/"]
+COPY ["CustomerService.API/CustomerService.API.csproj", "CustomerService.API/"]
+
+
+RUN dotnet restore CustomerService.API/CustomerService.API.csproj
+
+# Copy the entire project and build the application
+COPY . .
+WORKDIR /src/CustomerService.API
+RUN dotnet publish -c Release -o /app
+
+# Stage 2: Runtime
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS runtime
+WORKDIR /app
+COPY --from=build /app .
+
+# Expose the port your application is running on
+EXPOSE 5002
+
+# Set environment variables (optional, depending on your use case)
+ENV ASPNETCORE_ENVIRONMENT=Development
+ENV ASPNETCORE_HTTP_PORTS=5002
+
+
+ENTRYPOINT ["dotnet", "CustomerService.API.dll"]

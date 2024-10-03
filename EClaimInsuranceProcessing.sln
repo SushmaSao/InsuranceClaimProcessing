@@ -69,6 +69,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{A1BC15A2-3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{C796E437-1CFD-491C-B448-FD321D9A445F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{B797CBA1-41D1-41E7-B245-8BC701D634E3}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		compose.yaml = compose.yaml
+		Dockerfile.ClaimProcessingService.docker = Dockerfile.ClaimProcessingService.docker
+		Dockerfile.CustomerService.docker = Dockerfile.CustomerService.docker
+		DockerFile.IdentityService.docker = DockerFile.IdentityService.docker
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
