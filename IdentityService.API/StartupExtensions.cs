@@ -64,24 +64,6 @@ namespace IdentityService.API
 
             app.MapControllers();
             return app;
-        }
-
-        public static async Task ResetDatabaseAsync(this WebApplication app)
-        {
-            using var scope = app.Services.CreateScope();
-            try
-            {
-                var context = scope.ServiceProvider.GetService<IdentityServiceDBContext>();
-                if (context != null)
-                {
-                    await context.Database.EnsureDeletedAsync();
-                    await context.Database.MigrateAsync();
-                }
-            }
-            catch (Exception ex)
-            {
-                //add logging here later on
-            }
-        }
+        }     
     }
 }

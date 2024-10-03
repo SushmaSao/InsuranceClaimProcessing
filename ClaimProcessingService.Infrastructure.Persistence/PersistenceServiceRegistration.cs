@@ -12,7 +12,7 @@ namespace ClaimProcessingService.Persistence
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<ClaimProcessingServiceDBContext>(options =>
-              options.UseSqlServer(configuration.GetConnectionString("ClaimProcessingServiceConnectionString")));
+              options.UseNpgsql(configuration.GetConnectionString("ClaimProcessingServiceConnectionString")));
 
             services.AddScoped<IAsyncRepository<Claim>, AsyncRepository<Claim, ClaimProcessingServiceDBContext>>();
 
