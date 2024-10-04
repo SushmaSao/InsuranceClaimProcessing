@@ -39,7 +39,7 @@ The solution consists of several components following the Clean Architecture pat
     * PostgreSQL
     
 ## Running Locally
-* **Clone the repository:** git clone https://github.com/yourusername/EClaimInsuranceProcessing.git
+* **Clone the repository:** git clone https://github.com/SushmaSao/InsuranceClaimProcessing.git
 * **Navigate to the project directory:** cd EClaimInsuranceProcessing
 * **Build and run Docker containers:** docker-compose up
 *** Access the API:**
