@@ -25,7 +25,7 @@ The solution consists of several components following the Clean Architecture pat
      * Customer should be able to submit claims.
        
  # **Technologies Used**
-* **.NET Core 8 ** for developing microservices.
+* **.NET Core 8** for developing microservices.
 * **Entity Framework Core** for data access.
 * **PostgreSQL** as the relational database.
 * **CQRS Pattern** for segregating read and write operations.
