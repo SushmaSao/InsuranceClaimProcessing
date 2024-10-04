@@ -20,22 +20,29 @@ namespace CustomerService.Application.Command.Update
 
         public async Task<bool> Handle(UpdateCustomerProfileCommand request, CancellationToken cancellationToken)
         {
-            CustomerProfile customers = _mapper.Map<CustomerProfile>(request);
+            CustomerProfile customers;
 
             var customerProfiles = await _customerProfileRepository.FindAsync(cust => cust.UserId == request.UserId);
             if (customerProfiles != null && customerProfiles.Any())
             {
-                customers.Id = customerProfiles.FirstOrDefault().Id;
+                var custdata = customerProfiles.FirstOrDefault();
+
+                customers = _mapper.Map<CustomerProfile>(request);
+
+                customers.Id = custdata.Id;
+                customers.CreatedBy = custdata.CreatedBy;
+                customers.CreatedDate = custdata.CreatedDate;
+
+                //validation code 
+
+                await _customerProfileRepository.UpdateAsync(customers);
+
+                await _unitOfWork.CommitAsync();
+
+                return true;
             }
-            customers.LastModifiedBy = request.Email;
+            return false;
 
-            //validation code 
-
-            await _customerProfileRepository.UpdateAsync(customers);
-
-            await _unitOfWork.CommitAsync();
-
-            return true;
         }
     }
 }

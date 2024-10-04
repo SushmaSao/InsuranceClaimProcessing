@@ -1,5 +1,5 @@
 ﻿using ClaimProcessingService.Application.Command.Create;
-using MediatR;
+using ClaimProcessingService.Application.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -11,24 +11,23 @@ namespace ClaimProcessingService.API.Controllers
     [ApiController]
     public class ClaimController : ControllerBase
     {
-        private readonly IMediator _mediator;
-        public ClaimController(IMediator mediator)
+        private readonly IClaimService _claimService;
+        public ClaimController(IClaimService claimService)
         {
-            _mediator = mediator;
+            _claimService = claimService;
         }
 
         [HttpPost(Name = "AddClaim")]
-        public async Task<ActionResult> Create([FromBody] CreateClaimCommand createClaimCommand)
+        public async Task<ActionResult> Create([FromBody] ClaimDTO claimDTO)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId == null)
             {
                 return Unauthorized();
             }
+            var email = User.FindFirstValue(ClaimTypes.Email);
 
-            createClaimCommand.UserId = Guid.Parse(userId);
-
-            var response = await _mediator.Send(createClaimCommand);
+            var response = await _claimService.CreateClaim(email, Guid.Parse(userId), claimDTO);
             return Ok(response);
         }
     }

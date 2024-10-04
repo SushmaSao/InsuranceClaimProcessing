@@ -9,6 +9,7 @@ namespace CustomerService.Application.Profiles
         public MappingProfile()
         {
             CreateMap<Claim, CreateClaimCommand>().ReverseMap();
+            CreateMap<CreateClaimCommand, ClaimDTO>().ReverseMap();
         }
     }
 }

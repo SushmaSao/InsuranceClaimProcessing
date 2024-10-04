@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using ClaimProcessingService.Application.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ClaimProcessingService.Application
 {
@@ -8,6 +9,8 @@ namespace ClaimProcessingService.Application
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
+
+            services.AddScoped<IClaimService, ClaimService>();
 
             return services;
         }

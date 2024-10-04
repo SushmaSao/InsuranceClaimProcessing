@@ -1,12 +1,7 @@
-﻿using MediatR;
-
-namespace ClaimProcessingService.Application.Command.Create
+﻿namespace ClaimProcessingService.Application.Command.Create
 {
-    public class CreateClaimCommand : IRequest<bool>
+    public record ClaimDTO
     {
-        public Guid UserId { get; set; }
-        public string Email { get; set; }
-
         public string ClaimType { get; init; }
 
         public string IncidentDetails { get; init; }
