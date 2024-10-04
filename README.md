@@ -40,8 +40,9 @@ The solution consists of several components following the Clean Architecture pat
     
 ## Running Locally
 * **Clone the repository:** git clone https://github.com/SushmaSao/InsuranceClaimProcessing.git
-* **Navigate to the project directory:** cd EClaimInsuranceProcessing
-* **Build and run Docker containers:** docker-compose up
+* **Navigate to the project directory:** cd InsuranceClaimProcessing
+* **Switch to master branch:** git checkout master
+* **Build and run Docker containers:** docker compose up
 *** Access the API:**
     * Open http://localhost:5001 in your browser for IdentityService 
         * Can perform sign up and login, grab token and used in below service access.
