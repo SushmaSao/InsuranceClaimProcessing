@@ -3,8 +3,8 @@ version: '3.8'
 services:
   identityservice.api:
     build:
-      context: ./ # Path to the IdentityService Dockerfile
-      dockerfile: DockerFile.IdentityService.docker
+      context: . 
+      dockerfile: IdentityService.API/Dockerfile # Path to the IdentityService Dockerfile
     ports:
       - "5001:5001"
     environment:
@@ -15,8 +15,8 @@ services:
 
   customerservice:
     build:
-      context: ./ # Path to the CustomerService Dockerfile
-      dockerfile: Dockerfile.CustomerService.docker
+      context: .
+      dockerfile: CustomerService.API/Dockerfile   # Path to the CustomerService Dockerfile
     ports:
       - "5002:5002"
     environment:
@@ -28,8 +28,8 @@ services:
 
   claimprocessingservice:
     build:
-      context: ./ # Path to the ClaimProcessingService Dockerfile
-      dockerfile: Dockerfile.ClaimProcessingService.docker
+      context: .
+      dockerfile: ClaimProcessingService.API/Dockerfile # Path to the ClaimProcessingService Dockerfile
     ports:
       - "5003:5003"
     environment:
