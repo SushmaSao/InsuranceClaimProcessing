@@ -73,9 +73,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{B797CB
 	ProjectSection(SolutionItems) = preProject
 		.dockerignore = .dockerignore
 		compose.yaml = compose.yaml
-		Dockerfile.ClaimProcessingService.docker = Dockerfile.ClaimProcessingService.docker
-		Dockerfile.CustomerService.docker = Dockerfile.CustomerService.docker
-		DockerFile.IdentityService.docker = DockerFile.IdentityService.docker
 	EndProjectSection
 EndProject
 Global
