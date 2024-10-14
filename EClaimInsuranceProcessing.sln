@@ -73,6 +73,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{B797CB
 	ProjectSection(SolutionItems) = preProject
 		.dockerignore = .dockerignore
 		compose.yaml = compose.yaml
+		DockerSwarmReadMe.md = DockerSwarmReadMe.md
 	EndProjectSection
 EndProject
 Global
