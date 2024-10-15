@@ -3,6 +3,7 @@ services:
     build:
       context: . 
       dockerfile: IdentityService.API/Dockerfile # Path to the IdentityService Dockerfile
+    image: gcr.io/$PROJECT_ID/identityservice
     ports:
       - "5001:5001"
     environment:
@@ -17,6 +18,7 @@ services:
     build:
       context: .
       dockerfile: CustomerService.API/Dockerfile   # Path to the CustomerService Dockerfile
+    image: gcr.io/$PROJECT_ID/customerservice
     ports:
       - "5002:5002"
     environment:
@@ -32,6 +34,7 @@ services:
     build:
       context: .
       dockerfile: ClaimProcessingService.API/Dockerfile # Path to the ClaimProcessingService Dockerfile
+    image: gcr.io/$PROJECT_ID/claimprocessingservice
     ports:
       - "5003:5003"
     environment:
