@@ -17,5 +17,5 @@ steps:
     - '--platform'
     - 'managed'
     - '--region'
-    - 'asia-south1' # e.g., us-central1
+    - 'us-central1' # e.g., us-central1
     - '--allow-unauthenticated' # Adjust based on your authentication needs
