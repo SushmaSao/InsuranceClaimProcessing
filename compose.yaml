@@ -1,7 +1,5 @@
-version: '3.8'
-
 services:
-  identityservice.api:
+  identityservice:
     build:
       context: . 
       dockerfile: IdentityService.API/Dockerfile # Path to the IdentityService Dockerfile
@@ -12,6 +10,8 @@ services:
       - ConnectionStrings__EInsuranceIdentityConnectionString=Host=postgres;Port=5432;Database=Identity;Username=postgres;Password=password
     depends_on:
       - postgres
+    networks:
+      - backend
 
   customerservice:
     build:
@@ -24,7 +24,9 @@ services:
       - ConnectionStrings__CustomerServiceConnectionString=Host=postgres;Port=5432;Database=Customers;Username=postgres;Password=password
     depends_on:
       - postgres
-      - identityservice.api
+      - identityservice
+    networks:
+      - backend
 
   claimprocessingservice:
     build:
@@ -37,7 +39,9 @@ services:
       - ConnectionStrings__ClaimProcessingServiceConnectionString=Host=postgres;Port=5432;Database=ClaimProcessing;Username=postgres;Password=password
     depends_on:
       - postgres
-      - identityservice.api
+      - identityservice
+    networks:
+      - backend
 
   postgres:
     image: postgres:17
@@ -50,6 +54,11 @@ services:
       - pgdata:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    networks:
+      - backend
    
 volumes:
   pgdata:
+
+networks:
+  backend:
