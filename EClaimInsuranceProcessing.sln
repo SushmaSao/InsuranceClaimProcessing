@@ -72,6 +72,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{B797CBA1-41D1-41E7-B245-8BC701D634E3}"
 	ProjectSection(SolutionItems) = preProject
 		.dockerignore = .dockerignore
+		cloudbuild.yaml = cloudbuild.yaml
 		compose.yaml = compose.yaml
 	EndProjectSection
 EndProject

@@ -1,0 +1,19 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/eclaiminsuranceprocessing', '.']
+  
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/eclaiminsuranceprocessing']
+  
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+    - 'run'
+    - 'deploy'
+    - 'eclaiminsuranceprocessing'
+    - '--image'
+    - 'gcr.io/$PROJECT_ID/eclaiminsuranceprocessing'
+    - '--platform'
+    - 'managed'
+    - '--region'
+    - 'us-central1' # e.g., us-central1
+    - '--allow-unauthenticated' # Adjust based on your authentication needs
