@@ -1,0 +1,16 @@
+apiVersion: v1                      # API version for Service.
+kind: Service                       # Specifies this object is a Service.
+metadata:
+  name: insuranceclaim-db           # Name of the service.
+  labels:                           # Labels to organize and select the service.
+    app: insuranceclaim-db         # Label for categorizing this service.
+
+spec:
+  selector:                         # Defines which Pods this service will route traffic to.
+    app: insuranceclaim-db         # Matches the Pods that have this label.
+  ports:                            # Defines the ports the service will expose.
+  - protocol: TCP                   # Protocol for the service (usually TCP).
+    port: 5432                      # Port on which the service will be accessible.
+    targetPort: 5432                # Port on the Pod that the service forwards to.
+  type: ClusterIP                   # Type of service (ClusterIP, NodePort, LoadBalancer, ExternalName).
+

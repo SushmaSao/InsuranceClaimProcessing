@@ -75,6 +75,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{B797CB
 		compose.yaml = compose.yaml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{6D6BF004-A430-4DAD-9D6F-7D80953073F6}"
+	ProjectSection(SolutionItems) = preProject
+		identityservice-api.yml = identityservice-api.yml
+		insuranceclaim-db-deployment.yml = insuranceclaim-db-deployment.yml
+		insuranceclaim-db-services.yml = insuranceclaim-db-services.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -175,6 +182,7 @@ Global
 		{0509DD1A-5F4A-449F-B819-38BA32D41E6B} = {C796E437-1CFD-491C-B448-FD321D9A445F}
 		{A1BC15A2-381D-4C65-B84C-DA0CF3A8D2CB} = {03AB55D7-3191-40BE-A591-671C75F6C735}
 		{C796E437-1CFD-491C-B448-FD321D9A445F} = {03AB55D7-3191-40BE-A591-671C75F6C735}
+		{6D6BF004-A430-4DAD-9D6F-7D80953073F6} = {B797CBA1-41D1-41E7-B245-8BC701D634E3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CAC5707E-63BA-4CDE-966E-F8C682638C5A}
