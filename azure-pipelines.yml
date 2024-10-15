@@ -1,0 +1,49 @@
+# The pipeline is triggered on pushes to the 'main' branch
+trigger:
+  branches:
+    include:
+      - master  # Replace 'main' with your default branch
+
+# Specifies the pool of machines the pipeline will run on
+pool:
+  vmImage: 'ubuntu-latest'  # You can also use 'windows-latest' if required
+
+variables:
+  dockerRegistryServiceConnection: 'Docker Registry'
+
+# Steps define the tasks that will be executed in the pipeline
+steps:
+
+# Step 1: Checkout the code from the repository
+- task: Checkout@1
+  displayName: 'Checkout code'
+  checkout: self # This checks out the code from the same repository as the pipeline
+
+# Step 2: Build Docker image using the Dockerfile or docker-compose.yml
+- task: DockerCompose@0
+  displayName: 'Build Docker image'
+  inputs:
+    containerregistry: '$(dockerRegistryServiceConnection)'
+    dockerComposeFile: '**/docker-compose.yml'  # Path to your docker-compose file
+    action: 'Build services'
+    additionalImageTags: |
+      $(Build.BuildId)  # Tag the image with the build ID
+
+# Step 4: Run tests in the Docker container
+- script: |
+    docker-compose up -d
+    # Add commands to run unit tests, e.g., dotnet test or npm test
+  displayName: 'Run Unit Tests'
+
+# Step 5: Push the Docker image to a container registry
+- task: DockerCompose@0
+  displayName: 'Push Docker image to registry'
+  inputs:
+    containerregistry: 'myDockerRegistryServiceConnection'
+    dockerComposeFile: '**/docker-compose.yml'
+    action: 'Push services'
+
+# Step 6: Clean up containers after tests
+- script: |
+    docker-compose down
+  displayName: 'Clean up Docker containers'
