@@ -7,9 +7,22 @@ steps:
   - name: 'docker/compose:1.29.2'
     args: ['-f', 'compose.yaml', 'push']
 
+   # Pull the official PostgreSQL image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['pull', 'postgres:latest']
+
+  # Tag the PostgreSQL image for GCR
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['tag', 'postgres:latest', 'gcr.io/$PROJECT_ID/postgres-db:latest']
+
+  # Push the tagged image to Google Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/postgres-db:latest']
+
+
   - name: 'gcr.io/cloud-builders/docker'
     args: [
-      'run', '-d', '--name', 'postgres',
+      'run', '-d', '--name', 'postgres-db',
       '-e', 'POSTGRES_DB=postgres',
       '-e', 'POSTGRES_USER=postgres',
       '-e', 'POSTGRES_PASSWORD=postgres',
@@ -42,6 +55,6 @@ images:
   - 'gcr.io/$PROJECT_ID/identityservice:latest'
   - 'gcr.io/$PROJECT_ID/customerservice:latest'
   - 'gcr.io/$PROJECT_ID/claimprocessingservice:latest' 
-  - 'gcr.io/$PROJECT_ID/postgres:17' 
+  - 'gcr.io/$PROJECT_ID/postgres:latest' 
 
 
