@@ -55,6 +55,6 @@ images:
   - 'gcr.io/$PROJECT_ID/identityservice:latest'
   - 'gcr.io/$PROJECT_ID/customerservice:latest'
   - 'gcr.io/$PROJECT_ID/claimprocessingservice:latest' 
-  - 'gcr.io/$PROJECT_ID/postgres:latest' 
+  - 'gcr.io/$PROJECT_ID/postgres-db:latest' 
 
 
