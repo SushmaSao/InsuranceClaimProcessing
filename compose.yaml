@@ -4,8 +4,8 @@ services:
       context: . 
       dockerfile: IdentityService.API/Dockerfile # Path to the IdentityService Dockerfile
     image: gcr.io/$PROJECT_ID/identityservice:latest
-    ports:
-      - "5001:5001"
+    # ports: ## not working in cloud run
+    #   - "5001:5001"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__EInsuranceIdentityConnectionString=Host=postgres;Port=5432;Database=Identity;Username=postgres;Password=password
@@ -19,8 +19,8 @@ services:
       context: .
       dockerfile: CustomerService.API/Dockerfile   # Path to the CustomerService Dockerfile
     image: gcr.io/$PROJECT_ID/customerservice:latest
-    ports:
-      - "5002:5002"
+    # ports: ## not working in cloud run
+    #   - "5002:5002"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__CustomerServiceConnectionString=Host=postgres;Port=5432;Database=Customers;Username=postgres;Password=password
@@ -35,8 +35,8 @@ services:
       context: .
       dockerfile: ClaimProcessingService.API/Dockerfile # Path to the ClaimProcessingService Dockerfile
     image: gcr.io/$PROJECT_ID/claimprocessingservice:latest
-    ports:
-      - "5003:5003"
+    # ports: ## not working in cloud run
+    #   - "5003:5003"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__ClaimProcessingServiceConnectionString=Host=postgres;Port=5432;Database=ClaimProcessing;Username=postgres;Password=password

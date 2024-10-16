@@ -5,10 +5,10 @@ USER app
 WORKDIR /app
 
 # Expose the port your application is running on
-EXPOSE 5003
+#EXPOSE 5003 ## not working in cloud run
 # Set environment variables (optional, depending on your use case)
 ENV ASPNETCORE_ENVIRONMENT=Development
-ENV ASPNETCORE_HTTP_PORTS=5003
+#ENV ASPNETCORE_HTTP_PORTS=5003 ## not working in cloud run
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
