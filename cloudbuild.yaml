@@ -20,16 +20,13 @@ steps:
     args: ['push', 'gcr.io/$PROJECT_ID/postgres-db:latest']
 
 
-  - name: 'gcr.io/cloud-builders/docker'
+  - name: 'gcr.io/cloud-builders/gcloud'
     args: [
-      'run', '-d', '--name', 'postgres-db',
-      '-e', 'POSTGRES_DB=postgres',
-      '-e', 'POSTGRES_USER=postgres',
-      '-e', 'POSTGRES_PASSWORD=postgres',
-      '--volume', 'pgdata:/var/lib/postgresql/data',
-      '-p', '5432:5432',
-      'postgres:latest'
-    ]  
+      'run', 'deploy', 'postgres-db',
+      '--image', 'gcr.io/$PROJECT_ID/postgres-db:latest', 
+      '--region', 'us-central1',
+      '--allow-unauthenticated',
+      '--set-env-vars', 'POSTGRES_USER=postgres,POSTGRES_PASSWORD=postgres,POSTGRES_DB=postgres,POSTGRES_PORT=5432']  
 
     # Deploy the Docker image to Cloud Run
   - name: 'gcr.io/cloud-builders/gcloud'
