@@ -1,65 +1,12 @@
 options:
   defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
 steps:
-# Step 1: Set up Docker Compose
-- name: 'docker/compose:1.29.2'
-  args: ['up', '--build', '-d']
+  - name: 'docker/compose:1.29.2'
+    args: ['-f', 'compose.yaml', 'build']
+  - name: 'docker/compose:1.29.2'
+    args: ['-f', 'compose.yaml', 'push']
 
-# Step 2: Push individual images to Google Container Registry (GCR)
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['tag', 'identityservice', 'gcr.io/$PROJECT_ID/identityservice']
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/$PROJECT_ID/identityservice']
-
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['tag', 'customerservice', 'gcr.io/$PROJECT_ID/customerservice']
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/$PROJECT_ID/customerservice']
-
-
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['tag', 'claimprocessingservice', 'gcr.io/$PROJECT_ID/claimprocessingservice']
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/$PROJECT_ID/claimprocessingservice']
-
-
-# Step 3: Deploy to Google Cloud Run (or Cloud Run, GKE, etc.)
-- name: 'gcr.io/cloud-builders/gcloud'
-  args:
-    - 'run'
-    - 'deploy'
-    - 'identityservice'
-    - '--image'
-    - 'gcr.io/$PROJECT_ID/identityservice'
-    - '--region'
-    - 'us-central1'
-    - '--platform'
-    - 'managed'
-    - '--allow-unauthenticated'
-
-- name: 'gcr.io/cloud-builders/gcloud'
-  args:
-    - 'run'
-    - 'deploy'
-    - 'customerservice'
-    - '--image'
-    - 'gcr.io/$PROJECT_ID/customerservice'
-    - '--region'
-    - 'us-central1'
-    - '--platform'
-    - 'managed'
-    - '--allow-unauthenticated'
-
-
-- name: 'gcr.io/cloud-builders/gcloud'
-  args:
-    - 'run'
-    - 'deploy'
-    - 'claimprocessingservice'
-    - '--image'
-    - 'gcr.io/$PROJECT_ID/claimprocessingservice'
-    - '--region'
-    - 'us-central1'
-    - '--platform'
-    - 'managed'
-    - '--allow-unauthenticated'
+images:
+  - 'gcr.io/$PROJECT_ID/identityservice:latest'
+  - 'gcr.io/$PROJECT_ID/customerservice:latest'
+  - 'gcr.io/$PROJECT_ID/claimprocessingservice:latest'  
