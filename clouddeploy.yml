@@ -1,0 +1,7 @@
+steps:
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['run', 'deploy', 'identityservice', '--image', 'gcr.io/$PROJECT_ID/identityservice:latest', '--region', 'us-central1','--allow-unauthenticated']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['run', 'deploy', 'customerservice', '--image', 'gcr.io/$PROJECT_ID/customerservice:latest', '--region', 'us-central1','--allow-unauthenticated']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['run', 'deploy', 'claimprocessingservice', '--image', 'gcr.io/$PROJECT_ID/claimprocessingservice:latest', '--region', 'us-central1','--allow-unauthenticated']
