@@ -7,8 +7,18 @@ steps:
   - name: 'docker/compose:1.29.2'
     args: ['-f', 'compose.yaml', 'push']
 
-  
-  # Deploy the Docker image to Cloud Run
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'run', '-d', '--name', 'postgres',
+      '-e', 'POSTGRES_DB=postgres',
+      '-e', 'POSTGRES_USER=postgres',
+      '-e', 'POSTGRES_PASSWORD=postgres',
+      '--volume', 'pgdata:/var/lib/postgresql/data',
+      '-p', '5432:5432',
+      'postgres:latest'
+    ]  
+
+    # Deploy the Docker image to Cloud Run
   - name: 'gcr.io/cloud-builders/gcloud'
     args: [
             'run', 'deploy', 'identityservice', 
