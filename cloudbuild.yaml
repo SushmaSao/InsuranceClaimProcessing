@@ -7,17 +7,7 @@ steps:
   - name: 'docker/compose:1.29.2'
     args: ['-f', 'compose.yaml', 'push']
 
-
-  # Add IAM policy binding
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args:
-      [
-        'beta', 'run', 'services', 'add-iam-policy-binding', 'identityservice',
-        '--region=us-central1',
-        '--member=allUsers',
-        '--role=roles/run.invoker'
-      ]
-
+  
   # Deploy the Docker image to Cloud Run
   - name: 'gcr.io/cloud-builders/gcloud'
     args: [
