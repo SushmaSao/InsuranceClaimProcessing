@@ -7,31 +7,8 @@ steps:
   - name: 'docker/compose:1.29.2'
     args: ['-f', 'compose.yaml', 'push']
 
-  # Deploy the Docker image to Cloud Run
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args: [
-            'run', 'deploy', 'identityservice', 
-            '--image', 'gcr.io/$PROJECT_ID/identityservice:latest', 
-            '--region', 'us-central1',
-            '--allow-unauthenticated',
-            '--set-env-vars', 'PORT=5001']
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args: [
-            'run', 'deploy', 'customerservice', 
-            '--image', 'gcr.io/$PROJECT_ID/customerservice:latest', 
-            '--region', 'us-central1',
-            '--allow-unauthenticated',
-            '--set-env-vars', 'PORT=5002']
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args: [
-               'run', 'deploy', 'claimprocessingservice', 
-               '--image', 'gcr.io/$PROJECT_ID/claimprocessingservice:latest', 
-               '--region', 'us-central1',
-               '--allow-unauthenticated',
-                '--set-env-vars', 'PORT=5003'] 
 
-
-   # Add IAM policy binding
+  # Add IAM policy binding
   - name: 'gcr.io/cloud-builders/gcloud'
     args:
       [
@@ -41,6 +18,26 @@ steps:
         '--role=roles/run.invoker'
       ]
 
+  # Deploy the Docker image to Cloud Run
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: [
+            'run', 'deploy', 'identityservice', 
+            '--image', 'gcr.io/$PROJECT_ID/identityservice:latest', 
+            '--region', 'us-central1',
+            '--allow-unauthenticated']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: [
+            'run', 'deploy', 'customerservice', 
+            '--image', 'gcr.io/$PROJECT_ID/customerservice:latest', 
+            '--region', 'us-central1',
+            '--allow-unauthenticated']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: [
+               'run', 'deploy', 'claimprocessingservice', 
+               '--image', 'gcr.io/$PROJECT_ID/claimprocessingservice:latest', 
+               '--region', 'us-central1',
+               '--allow-unauthenticated'] 
+               
 images:
   - 'gcr.io/$PROJECT_ID/identityservice:latest'
   - 'gcr.io/$PROJECT_ID/customerservice:latest'
