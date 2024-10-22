@@ -56,4 +56,23 @@ The solution consists of several components following the Clean Architecture pat
         * can perform claim submission, add bearer token using authorize button, and add above token "Bearer{token}"
             ![image](https://github.com/user-attachments/assets/5e446934-18c4-4643-ada1-a5e29771c4a1)
 
+## Running on Cloud (GCP)
+* Create Google Cloud Account, if exists login
+* Go to Cloud build API
+  * Create Trigger - specify name, event, repository
+  *     ![image](https://github.com/user-attachments/assets/15abc8b2-d33a-4eba-af32-ee1c97935a7b)
+  * Build will be get created, which use cloudbuild.yaml file located in repository root level.
+* Once build is successful, it will deploy sevrices on CloudRun API service.
 
+ ** Access the API: **
+  * Open https://identityservice-32915672597.us-central1.run.app/swagger/index.html in your browser for IdentityService
+    * Can perform sign up and login, grab token and used in below service access.
+            ![image](https://github.com/user-attachments/assets/1d8af948-5c0a-4500-a302-986effa12bba)
+
+  * Open https://customerservice-32915672597.us-central1.run.app/swagger/index.html in your browser for CustomerService
+      * Can perform customer related actions like Get info and post info, add bearer token using authorize button, and add above token "Bearer{token}"
+           ![image](https://github.com/user-attachments/assets/1d131e6e-9310-4981-9bca-14fc70c0e9f6)
+
+  * Open https://claimprocessingservice-32915672597.us-central1.run.app/swagger/index.html in your browser for ClaimService
+      * can perform claim submission, add bearer token using authorize button, and add above token "Bearer{token}"
+            ![image](https://github.com/user-attachments/assets/945ec360-14b9-4470-8069-5bebf3fdaa5b)

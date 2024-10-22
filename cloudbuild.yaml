@@ -1,0 +1,57 @@
+options:
+  defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
+steps:
+  # Build and Push the Docker image
+  - name: 'docker/compose:1.29.2'
+    args: ['-f', 'compose.yaml', 'build']
+  - name: 'docker/compose:1.29.2'
+    args: ['-f', 'compose.yaml', 'push']
+
+   # Pull the official PostgreSQL image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['pull', 'postgres:latest']
+
+  # Tag the PostgreSQL image for GCR
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['tag', 'postgres:latest', 'gcr.io/$PROJECT_ID/postgres-db:latest']
+
+  # Push the tagged image to Google Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/postgres-db:latest']
+
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: [
+      'run', 'deploy', 'postgres-db',
+      '--image', 'gcr.io/$PROJECT_ID/postgres-db:latest', 
+      '--region', 'us-central1',
+      '--allow-unauthenticated',
+      '--set-env-vars', 'POSTGRES_USER=postgres,POSTGRES_PASSWORD=postgres,POSTGRES_DB=postgres,POSTGRES_PORT=5432']  
+
+    # Deploy the Docker image to Cloud Run
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: [
+            'run', 'deploy', 'identityservice', 
+            '--image', 'gcr.io/$PROJECT_ID/identityservice:latest', 
+            '--region', 'us-central1',
+            '--allow-unauthenticated']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: [
+            'run', 'deploy', 'customerservice', 
+            '--image', 'gcr.io/$PROJECT_ID/customerservice:latest', 
+            '--region', 'us-central1',
+            '--allow-unauthenticated']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: [
+               'run', 'deploy', 'claimprocessingservice', 
+               '--image', 'gcr.io/$PROJECT_ID/claimprocessingservice:latest', 
+               '--region', 'us-central1',
+               '--allow-unauthenticated'] 
+               
+images:
+  - 'gcr.io/$PROJECT_ID/identityservice:latest'
+  - 'gcr.io/$PROJECT_ID/customerservice:latest'
+  - 'gcr.io/$PROJECT_ID/claimprocessingservice:latest' 
+  - 'gcr.io/$PROJECT_ID/postgres-db:latest' 
+
+

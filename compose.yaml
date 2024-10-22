@@ -1,43 +1,50 @@
-version: '3.8'
-
 services:
-  identityservice.api:
+  identityservice:
     build:
       context: . 
       dockerfile: IdentityService.API/Dockerfile # Path to the IdentityService Dockerfile
-    ports:
-      - "5001:5001"
+    image: gcr.io/$PROJECT_ID/identityservice:latest
+    # ports: ## not working in cloud run
+    #   - "5001:5001"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__EInsuranceIdentityConnectionString=Host=postgres;Port=5432;Database=Identity;Username=postgres;Password=password
     depends_on:
       - postgres
+    networks:
+      - backend
 
   customerservice:
     build:
       context: .
       dockerfile: CustomerService.API/Dockerfile   # Path to the CustomerService Dockerfile
-    ports:
-      - "5002:5002"
+    image: gcr.io/$PROJECT_ID/customerservice:latest
+    # ports: ## not working in cloud run
+    #   - "5002:5002"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__CustomerServiceConnectionString=Host=postgres;Port=5432;Database=Customers;Username=postgres;Password=password
     depends_on:
       - postgres
-      - identityservice.api
+      - identityservice
+    networks:
+      - backend
 
   claimprocessingservice:
     build:
       context: .
       dockerfile: ClaimProcessingService.API/Dockerfile # Path to the ClaimProcessingService Dockerfile
-    ports:
-      - "5003:5003"
+    image: gcr.io/$PROJECT_ID/claimprocessingservice:latest
+    # ports: ## not working in cloud run
+    #   - "5003:5003"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__ClaimProcessingServiceConnectionString=Host=postgres;Port=5432;Database=ClaimProcessing;Username=postgres;Password=password
     depends_on:
       - postgres
-      - identityservice.api
+      - identityservice
+    networks:
+      - backend
 
   postgres:
     image: postgres:17
@@ -50,6 +57,11 @@ services:
       - pgdata:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    networks:
+      - backend
    
 volumes:
   pgdata:
+
+networks:
+  backend:
