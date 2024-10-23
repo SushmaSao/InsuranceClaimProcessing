@@ -78,11 +78,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{B797CB
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{6D6BF004-A430-4DAD-9D6F-7D80953073F6}"
-	ProjectSection(SolutionItems) = preProject
-		identityservice-api.yml = identityservice-api.yml
-		insuranceclaim-db-deployment.yml = insuranceclaim-db-deployment.yml
-		insuranceclaim-db-services.yml = insuranceclaim-db-services.yml
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
