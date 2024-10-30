@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ClaimProcessingService.Application\ClaimProcessingService.Application.csproj" />
     <ProjectReference Include="..\ClaimProcessingService.Infrastructure.Persistence\ClaimProcessingService.Persistence.csproj" />
+    <ProjectReference Include="..\Common.Infrastructure\Common.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
