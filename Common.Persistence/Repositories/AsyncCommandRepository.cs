@@ -4,13 +4,13 @@ using System.Linq.Expressions;
 
 namespace Common.Persistence.Repositories
 {
-    public class AsyncRepository<T, TContext> : IAsyncRepository<T>
+    public class AsyncCommandRepository<T, TContext> : IAsyncCommandRepository<T>
                                             where T : class
                                             where TContext : DbContext
     {
         protected readonly TContext _dbContext;
 
-        public AsyncRepository(TContext dbContext)
+        public AsyncCommandRepository(TContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -20,14 +20,6 @@ namespace Common.Persistence.Repositories
             _dbContext.Set<T>().Update(entity);
             return Task.CompletedTask;
         }
-
-        public async Task<T> GetByIdAsync(Guid id) => await _dbContext.Set<T>().FindAsync(id);
-
-        public async Task<IEnumerable<T>> GetAllAsync() => await _dbContext.Set<T>().ToListAsync();
-
-
-        public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate) => await _dbContext.Set<T>().Where(predicate).AsNoTracking().ToListAsync();
-
 
         public async Task AddAsync(T entity) => await _dbContext.Set<T>().AddAsync(entity);
 

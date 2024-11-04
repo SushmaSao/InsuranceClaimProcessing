@@ -14,7 +14,9 @@ namespace CustomerService.Persistence
             services.AddDbContext<CustomerServiceDBContext>(options =>
               options.UseNpgsql(configuration.GetConnectionString("CustomerServiceConnectionString")));
 
-            services.AddScoped<IAsyncRepository<CustomerProfile>, AsyncRepository<CustomerProfile, CustomerServiceDBContext>>();
+            services.AddScoped<IAsyncCommandRepository<CustomerProfile>, AsyncCommandRepository<CustomerProfile, CustomerServiceDBContext>>();
+            services.AddScoped<IAsyncQueryRepository<CustomerProfile>, AsyncQueryRepository<CustomerProfile, CustomerServiceDBContext>>();
+
 
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork<CustomerServiceDBContext>));
 

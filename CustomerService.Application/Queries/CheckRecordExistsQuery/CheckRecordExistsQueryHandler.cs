@@ -6,9 +6,9 @@ namespace CustomerService.Application.Queries
 {
     public class CheckRecordExistsQueryHandler : IRequestHandler<CheckRecordExistsQuery, bool>
     {
-        private readonly IAsyncRepository<CustomerProfile> _customerProfileRepository;
+        private readonly IAsyncQueryRepository<CustomerProfile> _customerProfileRepository;
 
-        public CheckRecordExistsQueryHandler(IAsyncRepository<CustomerProfile> customerProfileRepository)
+        public CheckRecordExistsQueryHandler(IAsyncQueryRepository<CustomerProfile> customerProfileRepository)
         {
             _customerProfileRepository = customerProfileRepository;
         }
