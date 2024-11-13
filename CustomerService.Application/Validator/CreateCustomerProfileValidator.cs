@@ -7,8 +7,6 @@ namespace CustomerService.Application.Validator
     {
         public CreateCustomerProfileValidator()
         {
-            RuleFor(cust => cust.Email).NotEmpty().WithMessage("Email is mandatory").EmailAddress().WithMessage("Email is invalid");
-            RuleFor(cust => cust.UserId).NotEmpty().WithMessage("UserId is mandatory");
             RuleFor(cust => cust.FirstName)
                     .NotEmpty().WithMessage("First name is mandatory")
                     .MinimumLength(5).WithMessage("First name must be length of 5.")

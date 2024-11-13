@@ -1,15 +1,14 @@
-﻿using MediatR;
+﻿using Common.Application.FunctionalExtensions;
+using MediatR;
 
 namespace CustomerService.Application.Command.Update
 {
-    public record UpdateCustomerProfileCommand : IRequest<bool>
+    public record UpdateCustomerProfileCommand : IRequest<Result<CustomerProfileDTO>>
     {
-        public Guid UserId { get; set; }
-        public string FirstName { get; init; }
-        public string LastName { get; init; }
-        public string PhoneNumber { get; init; }
-        public string Address { get; init; }
-        public DateTime DateOfBirth { get; init; }
-        public string Email { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Address { get; set; }
+        public DateTime DateOfBirth { get; set; }
     }
 }

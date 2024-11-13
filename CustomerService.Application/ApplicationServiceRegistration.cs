@@ -22,6 +22,7 @@ namespace CustomerService.Application
 
 
             services.AddScoped<ICustomerProfileService, CustomerProfileService>();
+
             return services;
         }
     }

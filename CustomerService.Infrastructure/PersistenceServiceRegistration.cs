@@ -1,4 +1,6 @@
 ﻿using Common.Application.Contracts.Persistence;
+using Common.Application.Contracts.UserContract;
+using Common.Infrastructure.UserService;
 using Common.Persistence.Repositories;
 using CustomerService.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +18,7 @@ namespace CustomerService.Persistence
 
             services.AddScoped<IAsyncCommandRepository<CustomerProfile>, AsyncCommandRepository<CustomerProfile, CustomerServiceDBContext>>();
             services.AddScoped<IAsyncQueryRepository<CustomerProfile>, AsyncQueryRepository<CustomerProfile, CustomerServiceDBContext>>();
-
+            services.AddScoped<ICurrentUser, CurrentUser>();
 
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork<CustomerServiceDBContext>));
 

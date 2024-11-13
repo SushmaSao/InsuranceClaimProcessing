@@ -1,4 +1,5 @@
-﻿using CustomerService.Application.Command;
+﻿using Common.Application.FunctionalExtensions;
+using CustomerService.Application.Command;
 using CustomerService.Application.Queries;
 using CustomerService.Application.Services;
 using MediatR;
@@ -40,18 +41,8 @@ namespace CustomerService.API.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateProfile(CustomerProfileDTO customerProfileDTO)
         {
-            var email = User.FindFirstValue(ClaimTypes.Email);
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            if (email == null)
-            {
-                return Unauthorized();
-            }
-
-            await _customerProfileService.CreateOrUpdateProfile(email, Guid.Parse(userId), customerProfileDTO);
-
-
-            return Ok();
+            Result<CustomerProfileDTO> results = await _customerProfileService.CreateOrUpdateProfile(customerProfileDTO);
+            return results.IsSuccess ? Ok(results) : NotFound(results.Error);
         }
     }
 }
