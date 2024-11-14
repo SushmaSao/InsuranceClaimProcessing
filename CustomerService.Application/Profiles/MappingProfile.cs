@@ -16,7 +16,7 @@ namespace CustomerService.Application.Profiles
             CreateMap<UpdateCustomerProfileCommand, CustomerProfile>().ReverseMap();
             CreateMap<CreateCustomerProfileCommand, CustomerProfileDTO>().ReverseMap();
             CreateMap<UpdateCustomerProfileCommand, CustomerProfileDTO>().ReverseMap();
-
+            CreateMap<CustomerProfile,CustomerProfileDTO>().ReverseMap();
 
         }
     }

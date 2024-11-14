@@ -26,7 +26,6 @@ services:
       - ConnectionStrings__CustomerServiceConnectionString=Host=postgres;Port=5432;Database=Customers;Username=postgres;Password=password
     depends_on:
       - postgres
-      - identityservice
     networks:
       - backend
 
@@ -42,7 +41,6 @@ services:
       - ConnectionStrings__ClaimProcessingServiceConnectionString=Host=postgres;Port=5432;Database=ClaimProcessing;Username=postgres;Password=password
     depends_on:
       - postgres
-      - identityservice
     networks:
       - backend
 

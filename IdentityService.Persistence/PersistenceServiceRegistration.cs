@@ -14,8 +14,12 @@ namespace IdentityService.Persistence
             services.AddDbContext<IdentityServiceDBContext>(options =>
               options.UseNpgsql(configuration.GetConnectionString("EInsuranceIdentityConnectionString")));
 
-            services.AddScoped(typeof(IAsyncRepository<Users>), typeof(AsyncRepository<Users, IdentityServiceDBContext>));
-            services.AddScoped(typeof(IAsyncRepository<UserRoles>), typeof(AsyncRepository<UserRoles, IdentityServiceDBContext>));
+            services.AddScoped(typeof(IAsyncCommandRepository<Users>), typeof(AsyncCommandRepository<Users, IdentityServiceDBContext>));
+            services.AddScoped(typeof(IAsyncCommandRepository<UserRoles>), typeof(AsyncCommandRepository<UserRoles, IdentityServiceDBContext>));
+
+
+            services.AddScoped(typeof(IAsyncQueryRepository<Users>), typeof(AsyncQueryRepository<Users, IdentityServiceDBContext>));
+            services.AddScoped(typeof(IAsyncQueryRepository<UserRoles>), typeof(AsyncQueryRepository<UserRoles, IdentityServiceDBContext>));
 
 
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork<IdentityServiceDBContext>));

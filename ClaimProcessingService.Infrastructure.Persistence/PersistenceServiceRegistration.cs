@@ -14,7 +14,7 @@ namespace ClaimProcessingService.Persistence
             services.AddDbContext<ClaimProcessingServiceDBContext>(options =>
               options.UseNpgsql(configuration.GetConnectionString("ClaimProcessingServiceConnectionString")));
 
-            services.AddScoped<IAsyncRepository<Claim>, AsyncRepository<Claim, ClaimProcessingServiceDBContext>>();
+            services.AddScoped<IAsyncCommandRepository<Claim>, AsyncCommandRepository<Claim, ClaimProcessingServiceDBContext>>();
 
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork<ClaimProcessingServiceDBContext>));
 

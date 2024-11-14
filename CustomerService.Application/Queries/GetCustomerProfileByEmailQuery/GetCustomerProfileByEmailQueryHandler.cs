@@ -7,10 +7,10 @@ namespace CustomerService.Application.Queries
 {
     internal class GetCustomerProfileByEmailQueryHandler : IRequestHandler<GetCustomerProfileByEmailQuery, ReadCustomerProfileDTO>
     {
-        private readonly IAsyncRepository<CustomerProfile> _customerProfileRepository;
+        private readonly IAsyncQueryRepository<CustomerProfile> _customerProfileRepository;
         private readonly IMapper _mapper;
 
-        public GetCustomerProfileByEmailQueryHandler(IAsyncRepository<CustomerProfile> customerProfileRepository, IMapper mapper)
+        public GetCustomerProfileByEmailQueryHandler(IAsyncQueryRepository<CustomerProfile> customerProfileRepository, IMapper mapper)
         {
             _customerProfileRepository = customerProfileRepository;
             _mapper = mapper;

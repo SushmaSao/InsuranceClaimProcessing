@@ -1,4 +1,5 @@
-﻿using CustomerService.Application;
+﻿using CustomerService.API.Middleware;
+using CustomerService.Application;
 using CustomerService.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -47,19 +48,26 @@ namespace CustomerService.API
 
         public static WebApplication ConfigurePipeline(this WebApplication app)
         {
+            Console.Title = "Customer Service API";
+
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(act => act.DocumentTitle = "Swagger - Customer Service API");
             }
 
+
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.MapControllers();
+
             return app;
         }
 

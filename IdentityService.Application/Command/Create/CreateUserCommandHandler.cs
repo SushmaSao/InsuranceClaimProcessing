@@ -8,15 +8,15 @@ namespace IdentityService.Application.Command.Create
 {
     public class RegisterUserCommandHandler : IRequestHandler<CreateUserCommand, bool>
     {
-        private readonly IAsyncRepository<Users> _userRepository;
-        private readonly IAsyncRepository<UserRoles> _userRoleRepository;
+        private readonly IAsyncCommandRepository<Users> _userRepository;
+        private readonly IAsyncCommandRepository<UserRoles> _userRoleRepository;
         private readonly IPasswordHasher _passwordHasher;
 
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public RegisterUserCommandHandler(IAsyncRepository<Users> userRepository,
-            IAsyncRepository<UserRoles> userRoleRepository,
+        public RegisterUserCommandHandler(IAsyncCommandRepository<Users> userRepository,
+            IAsyncCommandRepository<UserRoles> userRoleRepository,
             IPasswordHasher passwordHasher,
             IUnitOfWork unitOfWork,
             IMapper mapper)

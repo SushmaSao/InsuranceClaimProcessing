@@ -1,5 +1,7 @@
 ﻿using ClaimProcessingService.Application;
 using ClaimProcessingService.Persistence;
+using Common.Application.Contracts.Kafka;
+using Common.Infrastructure.Kafka;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -9,6 +11,8 @@ namespace ClaimProcessingService.API
     {
         public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
         {
+            builder.Services.AddScoped<IKafkaProducer, KafkaProducer>();
+
             builder.Services.AddApplicationServices();
             builder.Services.AddPersistenceServices(builder.Configuration);
             builder.Services.AddHttpContextAccessor();
