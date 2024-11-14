@@ -1,0 +1,26 @@
+apiVersion: apps/v1               # API version for Deployment. The `apps/v1` is the latest stable version for Deployments.
+kind: Deployment                  # Specifies that this is a Deployment object.
+metadata:
+  name: insuranceclaim-db              # Name of the deployment.
+  labels:                         # Labels to organize and select objects.
+    app: insuranceclaim-db                    # Label key-value pair for this deployment.
+
+spec:
+  selector:
+    matchLabels:                  # Selector ensures the deployment manages Pods with these labels.
+      app: insuranceclaim-db 
+  template:                      
+    metadata:
+      labels:
+        app: insuranceclaim-db    # Labels that match the selector for the deployment.
+    spec:
+      containers:
+      - name: postgres            # Name of the container within the pod.
+        image: postgres:17         # The container image to run.
+        env:
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: password
+        - name: POSTGRES_DB
+          value  : postgres
