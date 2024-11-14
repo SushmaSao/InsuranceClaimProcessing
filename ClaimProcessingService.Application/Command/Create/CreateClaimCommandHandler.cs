@@ -9,11 +9,11 @@ namespace CustomerService.Application.Command.Create
 {
     public class CreateClaimCommandHandler : IRequestHandler<CreateClaimCommand, bool>
     {
-        private readonly IAsyncRepository<ClaimProcessingService.Domain.Entities.Claim> _claimRepository;
+        private readonly IAsyncCommandRepository<ClaimProcessingService.Domain.Entities.Claim> _claimRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CreateClaimCommandHandler(IAsyncRepository<ClaimProcessingService.Domain.Entities.Claim> claimRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public CreateClaimCommandHandler(IAsyncCommandRepository<ClaimProcessingService.Domain.Entities.Claim> claimRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             this._claimRepository = claimRepository;
             this._unitOfWork = unitOfWork;

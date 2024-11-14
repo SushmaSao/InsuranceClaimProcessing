@@ -1,47 +1,59 @@
 ﻿using AutoMapper;
 using Common.Application.Contracts.Persistence;
+using Common.Application.Contracts.UserContract;
+using Common.Application.FunctionalExtensions;
 using CustomerService.Domain.Entities;
 using MediatR;
 
 namespace CustomerService.Application.Command.Update
 {
-    public class UpdateCustomerProfileCommandHandler : IRequestHandler<UpdateCustomerProfileCommand, bool>
+    public class UpdateCustomerProfileCommandHandler : IRequestHandler<UpdateCustomerProfileCommand, Result<CustomerProfileDTO>>
     {
-        private readonly IAsyncRepository<CustomerProfile> _customerProfileRepository;
+        private readonly IAsyncCommandRepository<CustomerProfile> _customerProfileRepository;
+        private readonly IAsyncQueryRepository<CustomerProfile> _customerProfileReadRepository;
+
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UpdateCustomerProfileCommandHandler(IAsyncRepository<CustomerProfile> customerProfileRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly ICurrentUser _currentUser;
+
+
+        public UpdateCustomerProfileCommandHandler(IAsyncCommandRepository<CustomerProfile> customerProfileRepository,
+            IAsyncQueryRepository<CustomerProfile> customerProfileReadRepository,
+            IUnitOfWork unitOfWork,
+            IMapper mapper, ICurrentUser currentUser)
         {
             this._customerProfileRepository = customerProfileRepository;
+            _customerProfileReadRepository = customerProfileReadRepository;
             this._unitOfWork = unitOfWork;
             this._mapper = mapper;
+            _currentUser = currentUser;
         }
 
-        public async Task<bool> Handle(UpdateCustomerProfileCommand request, CancellationToken cancellationToken)
+        public async Task<Result<CustomerProfileDTO>> Handle(UpdateCustomerProfileCommand request, CancellationToken cancellationToken)
         {
-            CustomerProfile customers;
+            var customerProfiles = await _customerProfileReadRepository.FindAsync(cust => cust.UserId == _currentUser.UserId);
 
-            var customerProfiles = await _customerProfileRepository.FindAsync(cust => cust.UserId == request.UserId);
             if (customerProfiles != null && customerProfiles.Any())
             {
-                var custdata = customerProfiles.FirstOrDefault();
+                CustomerProfile? customers = customerProfiles.FirstOrDefault();
 
-                customers = _mapper.Map<CustomerProfile>(request);
-
-                customers.Id = custdata.Id;
-                customers.CreatedBy = custdata.CreatedBy;
-                customers.CreatedDate = custdata.CreatedDate;
-
-                //validation code 
+                customers.Address = request.Address;
+                customers.PhoneNumber = request.PhoneNumber;
+                customers.FirstName = request.FirstName;
+                customers.LastName = request.LastName;
+                customers.DateOfBirth = request.DateOfBirth;
 
                 await _customerProfileRepository.UpdateAsync(customers);
 
-                await _unitOfWork.CommitAsync();
+                var val = await _unitOfWork.CommitAsync();
 
-                return true;
+                CustomerProfileDTO returnVal = _mapper.Map<CustomerProfileDTO>(customers);
+
+                return Result.Success<CustomerProfileDTO>(returnVal);
             }
-            return false;
+
+            return Result.Fail<CustomerProfileDTO>("Customer does not exists");
 
         }
     }

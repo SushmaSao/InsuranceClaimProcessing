@@ -7,18 +7,25 @@ namespace IdentityService.Application.Command.Authenticate
 {
     public class AuthenticateUserCommandHandler : IRequestHandler<AuthenticateUserCommand, string>
     {
-        private readonly IAsyncRepository<Users> _userRepository;
-        private readonly IAsyncRepository<UserRoles> _userRoleRepository;
+        private readonly IAsyncCommandRepository<Users> _userRepository;
+        private readonly IAsyncCommandRepository<UserRoles> _userRoleRepository;
+        private readonly IAsyncQueryRepository<Users> _userReadRepository;
+        private readonly IAsyncQueryRepository<UserRoles> _userRoleReadRepository;
+
         private readonly IPasswordHasher _passwordHasher;
         private readonly ITokenGenerator _tokenGenerator;
 
-        public AuthenticateUserCommandHandler(IAsyncRepository<Users> userRepository,
-            IAsyncRepository<UserRoles> usrRoleRepository,
+        public AuthenticateUserCommandHandler(IAsyncCommandRepository<Users> userRepository,
+            IAsyncCommandRepository<UserRoles> usrRoleRepository,
+            IAsyncQueryRepository<Users> userReadRepository,
+            IAsyncQueryRepository<UserRoles> userRoleReadRepository,
             IPasswordHasher passwordHasher,
             ITokenGenerator tokenGenerator)
         {
             _userRepository = userRepository;
             _userRoleRepository = usrRoleRepository;
+            _userReadRepository = userReadRepository;
+            _userRoleReadRepository = userRoleReadRepository;
             _passwordHasher = passwordHasher;
             _tokenGenerator = tokenGenerator;
         }
@@ -27,7 +34,7 @@ namespace IdentityService.Application.Command.Authenticate
         {
             string token = string.Empty;
 
-            var user = await _userRepository.FindAsync(usr => usr.Email == request.Email);
+            var user = await _userReadRepository.FindAsync(usr => usr.Email == request.Email);
 
             if (user != null && user.Any())
             {
@@ -40,7 +47,7 @@ namespace IdentityService.Application.Command.Authenticate
                 }
 
                 //Fetch UserRoles
-                var usrRoleRepo = await _userRoleRepository.FindAsync(rol => rol.UserId == usrDetails.Id);
+                var usrRoleRepo = await _userRoleReadRepository.FindAsync(rol => rol.UserId == usrDetails.Id);
 
 
                 // Generate JWT token with roles
