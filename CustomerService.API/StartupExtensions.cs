@@ -54,7 +54,7 @@ namespace CustomerService.API
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI(act => act.DocumentTitle = "Swagger - Customer Service API");
+                app.UseSwaggerUI(act => act.DocumentTitle = "Customer Service API");
             }
 
 
@@ -84,7 +84,7 @@ namespace CustomerService.API
                 await context.Database.MigrateAsync();
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //add logging here later on
             }

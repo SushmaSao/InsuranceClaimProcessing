@@ -11,6 +11,8 @@ namespace ClaimProcessingService.API
     {
         public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
         {
+            Console.Title = "Claim-Processing API";
+
             builder.Services.AddScoped<IKafkaProducer, KafkaProducer>();
 
             builder.Services.AddApplicationServices();
@@ -42,7 +44,7 @@ namespace ClaimProcessingService.API
                     Id = "Bearer"
                 }
             },
-            new string[] {}
+            Array.Empty<string>()
         }
     });
             });
@@ -54,7 +56,7 @@ namespace ClaimProcessingService.API
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(act => act.DocumentTitle = "Claim-Processing Service API");
             }
 
 

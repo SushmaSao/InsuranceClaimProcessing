@@ -10,6 +10,8 @@ namespace IdentityService.API
     {
         public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
         {
+            Console.Title = "Identity Service API";
+
             builder.Services.AddApplicationServices();
             builder.Services.AddPersistenceService(builder.Configuration);
             builder.Services.AddInfrastructureService();
@@ -53,7 +55,7 @@ namespace IdentityService.API
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(act => act.DocumentTitle = "Identity Service API");
             }
 
 
