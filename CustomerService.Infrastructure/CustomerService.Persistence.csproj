@@ -7,9 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.20" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,6 +16,10 @@
     <ProjectReference Include="..\Common.Persistence\Common.Persistence.csproj" />
     <ProjectReference Include="..\CustomerService.Application\CustomerService.Application.csproj" />
     <ProjectReference Include="..\CustomerService.Core\CustomerService.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

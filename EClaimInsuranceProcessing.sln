@@ -69,22 +69,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{A1BC15A2-3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{C796E437-1CFD-491C-B448-FD321D9A445F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{B797CBA1-41D1-41E7-B245-8BC701D634E3}"
-	ProjectSection(SolutionItems) = preProject
-		.dockerignore = .dockerignore
-		.env = .env
-		cloudbuild.yaml = cloudbuild.yaml
-		compose.yaml = compose.yaml
-		kafka-docker-compose.yml = kafka-docker-compose.yml
-		README_Docker.md = README_Docker.md
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Infrastructure", "Common.Infrastructure\Common.Infrastructure.csproj", "{7CBE0961-97D0-47C6-BAA8-D51243E5405A}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{6D6BF004-A430-4DAD-9D6F-7D80953073F6}"
-	ProjectSection(SolutionItems) = preProject
-		identityservice-api.yml = identityservice-api.yml
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -191,7 +176,6 @@ Global
 		{A1BC15A2-381D-4C65-B84C-DA0CF3A8D2CB} = {03AB55D7-3191-40BE-A591-671C75F6C735}
 		{C796E437-1CFD-491C-B448-FD321D9A445F} = {03AB55D7-3191-40BE-A591-671C75F6C735}
 		{7CBE0961-97D0-47C6-BAA8-D51243E5405A} = {C796E437-1CFD-491C-B448-FD321D9A445F}
-		{6D6BF004-A430-4DAD-9D6F-7D80953073F6} = {B797CBA1-41D1-41E7-B245-8BC701D634E3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CAC5707E-63BA-4CDE-966E-F8C682638C5A}

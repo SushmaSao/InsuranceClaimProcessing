@@ -13,8 +13,7 @@ namespace CustomerService.Persistence
     {
         public static IServiceCollection AddPersistenceService(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<CustomerServiceDBContext>(options =>
-              options.UseNpgsql(configuration.GetConnectionString("CustomerServiceConnectionString")));
+            services.AddDbContext<CustomerServiceDBContext>(options => options.UseSqlServer(configuration.GetConnectionString("CustomerServiceConnectionString")));
 
             services.AddScoped<IAsyncCommandRepository<CustomerProfile>, AsyncCommandRepository<CustomerProfile, CustomerServiceDBContext>>();
             services.AddScoped<IAsyncQueryRepository<CustomerProfile>, AsyncQueryRepository<CustomerProfile, CustomerServiceDBContext>>();
