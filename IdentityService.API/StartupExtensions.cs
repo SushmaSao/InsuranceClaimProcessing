@@ -52,11 +52,11 @@ namespace IdentityService.API
 
         public static WebApplication ConfigurePipeline(this WebApplication app)
         {
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI(act => act.DocumentTitle = "Identity Service API");
-            }
+            //if (app.Environment.IsDevelopment())
+            //{
+            app.UseSwagger();
+            app.UseSwaggerUI(act => act.DocumentTitle = "Identity Service API");
+            //   }
 
 
             app.UseHttpsRedirection();
